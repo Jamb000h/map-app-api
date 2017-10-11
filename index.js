@@ -71,7 +71,6 @@ app.delete('/points/:uuid', (req, res) =>{
   if(req.params.uuid) { // If request has data
     client.hdel('points', req.params.uuid, (err, data) => {
       if(data) {
-        res.set('Content-Type', 'text/json')
         res.status(200).end("Point deleted")
       } else {
         res.status(200).end('Point not found')
