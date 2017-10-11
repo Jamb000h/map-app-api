@@ -6,7 +6,7 @@ const dotenv = require('dotenv').config()
 const uuid = require('uuid/v4')
 
 const app = express();
-app.use(bodyParser)
+app.use(bodyParser.json())
 
 const client = redis.createClient();
 client.on('error', error => {
