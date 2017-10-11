@@ -12,7 +12,7 @@ client.on('error', error => {
 
 const mockData = fs.readFile('mockData.json', (err, data) => {
   if(data) {
-    client.set('points', mockData, 'EX', 60*60*24);
+    client.set('points', data, 'EX', 60*60*24);
   }
 })
 
