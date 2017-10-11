@@ -39,11 +39,11 @@ app.post('/points', (req, res) => { // Post a new point
   console.log(req)
   if(req.body) { // If request has data
     const point = req.body;
-    const uuid = uuidv4() // Generate UUID
-    point.uuid = uuid;
-    client.set(uuid, point, (err, data) => { // Save to redis
+    const pointUUID = uuidv4() // Generate UUID
+    point.uuid = pointUUID;
+    client.set(pointUUID, point, (err, data) => { // Save to redis
       if(data) {
-        client.get(uuid, (err, data) => { // Get saved point from redis
+        client.get(pointUUID, (err, data) => { // Get saved point from redis
           if(data) {
             res.set('Content-Type', 'text/json')
             res.status(200).end(data)
