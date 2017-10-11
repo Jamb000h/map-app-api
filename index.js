@@ -43,7 +43,7 @@ app.get('/points/:uuid', (req, res) => { // Get a single point
   }
 })
 
-app.post('/points', (req, res) => { // Post a new point
+app.post('/points', (req, res) => { // Post a new point OR update an existing one
   console.log(req)
   if(req.body) { // If request has data
     const point = req.body;
@@ -63,6 +63,22 @@ app.post('/points', (req, res) => { // Post a new point
         res.status(500).end('Could not save point')
       }
     });
+  }
+})
+
+app.delete('/points/:uuid', (req, res) =>{
+  console.log(req)
+  if(req.params.uuid) { // If request has data
+    client.hdel('points', req.params.uuid, (err, data) => {
+      if(data) {
+        res.set('Content-Type', 'text/json')
+        res.status(200).end("Point deleted")
+      } else {
+        res.status(200).end('Point not found')
+      }
+    })
+  } else {
+     res.status(400).end("No UUID supplied")
   }
 })
 
