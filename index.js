@@ -17,6 +17,7 @@ app.get('/points', (req, res) => { // Get all points
   client.hgetall('points', (err, data) => { // Returns single object
     if(data) {
       const points = Object.values(data).map( point => { // Scrap return object keys
+        console.log(point)
         JSON.parse(point)
       }) 
       res.set('Content-Type', 'text/json')
@@ -27,10 +28,10 @@ app.get('/points', (req, res) => { // Get all points
   })
 })
 
-app.get('/point', (req, res) => { // Get a single point
+app.get('/points/:uuid', (req, res) => { // Get a single point
   console.log(req)
-  if(req.body.uuid) { // If request has data
-    client.hget('points', req.body.uuid, (err, data) => {
+  if(req.params.uuid) { // If request has data
+    client.hget('points', req.params.uuid, (err, data) => {
       if(data) {
         res.set('Content-Type', 'text/json')
         res.status(200).end(data)
