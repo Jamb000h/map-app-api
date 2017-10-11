@@ -10,6 +10,12 @@ client.on('error', error => {
   console.log(error)
 })
 
+const mockData = fs.readFile('mockData.json', (err, data) => {
+  if(data) {
+    client.setex('points', 60*60*24, mockData);
+  }
+})
+
 app.get('/points', (req, res) => {
   client.get('points', (err, data) => {
     if(data) {
