@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const fs = require('fs')
 const redis = require('redis')
 const dotenv = require('dotenv').config()
-const uuid = require('uuid/v4')
+const uuidv4 = require('uuid/v4')
 
 const app = express();
 app.use(bodyParser.json())
@@ -39,11 +39,11 @@ app.post('/points', (req, res) => { // Post a new point
   console.log(req)
   if(req.body) { // If request has data
     const point = req.body;
-    const pointUUID = uuidv4() // Generate UUID
-    point.uuid = pointUUID;
-    client.set(pointUUID, point, (err, data) => { // Save to redis
+    const uuid = uuidv4() // Generate UUID
+    point.uuid = uuid;
+    client.set(uuid, point, (err, data) => { // Save to redis
       if(data) {
-        client.get(pointUUID, (err, data) => { // Get saved point from redis
+        client.get(uuid, (err, data) => { // Get saved point from redis
           if(data) {
             res.set('Content-Type', 'text/json')
             res.status(200).end(data)
