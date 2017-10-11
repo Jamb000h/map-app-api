@@ -4,9 +4,11 @@ const fs = require('fs')
 const redis = require('redis')
 const dotenv = require('dotenv').config()
 const uuidv4 = require('uuid/v4')
+const cors = require('cors')
 
 const app = express();
 app.use(bodyParser.json())
+app.use(cors())
 
 const client = redis.createClient();
 client.on('error', error => {
