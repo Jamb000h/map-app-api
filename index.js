@@ -16,7 +16,7 @@ app.get('/points', (req, res) => {
       res.set('Content-Type', 'text/json')
       res.status(200).send(data)
     } else {
-      res.status(403).end()
+      res.status(403).end(err)
     }
   })
 })
