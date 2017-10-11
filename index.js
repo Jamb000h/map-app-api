@@ -35,7 +35,7 @@ app.get('/points:uuid', (req, res) => { // Get a single point
   })
 })
 
-app.post('points', (req, res) => { // Post a new point
+app.post('/points', (req, res) => { // Post a new point
   console.log(req)
   if(req.body) { // If request has data
     const point = req.body;
