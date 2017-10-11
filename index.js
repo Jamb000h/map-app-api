@@ -16,7 +16,7 @@ client.on('error', error => {
 app.get('/points', (req, res) => { // Get all points
   client.hgetall('points', (err, data) => { // returns single object
     if(data) {
-      const points = Object.values(data) // scrap return onject keys
+      const points = JSON.parse(Object.values(data)) // scrap return onject keys
       res.set('Content-Type', 'text/json')
       res.status(200).send(data)
     } else {
