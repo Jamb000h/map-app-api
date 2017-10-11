@@ -17,8 +17,7 @@ app.get('/points', (req, res) => { // Get all points
   client.hgetall('points', (err, data) => { // Returns single object
     if(data) {
       const points = Object.values(data).map( point => { // Scrap return object keys
-        console.log(point)
-        JSON.parse(point)
+        return JSON.parse(point)
       }) 
       res.set('Content-Type', 'text/json')
       res.status(200).send(points)
