@@ -1,6 +1,6 @@
 # Map App API
 
-A simple API that implements CRUD for [map app](https://github.com/Jamb000h/map-app-api) points of interest.
+A simple API that implements CRUD for [map app](https://github.com/Jamb000h/map-app) points of interest.
 
 Features:
 - Node.js
