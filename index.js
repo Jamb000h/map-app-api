@@ -24,7 +24,7 @@ app.get('/points', (req, res) => { // Get all points
       res.set('Content-Type', 'text/json')
       res.status(200).send(points)
     } else {
-      res.status(403).end(err)
+      res.status(204).end(err)
     }
   })
 })
@@ -37,7 +37,7 @@ app.get('/points/:uuid', (req, res) => { // Get a single point
         res.set('Content-Type', 'text/json')
         res.status(200).end(data)
       } else {
-        res.status(500).end('Could not get point')
+        res.status(204).end('Could not get point')
       }
     })
   } else {
@@ -58,7 +58,7 @@ app.post('/points', (req, res) => { // Post a new point OR update an existing on
             res.set('Content-Type', 'text/json')
             res.status(200).end(data)
           } else {
-            res.status(500).end('Could not get saved point - save was fine though')
+            res.status(204).end('Could not get saved point - save was fine though')
           }
         })
       } else {
@@ -68,14 +68,35 @@ app.post('/points', (req, res) => { // Post a new point OR update an existing on
   }
 })
 
-app.delete('/points/:uuid', (req, res) =>{
+app.patch('/points/:uuid', (req, res) => {
+  console.log(req)
+  if(req.params.uuid && req.body) {
+    const point = req.body;
+    client.hset('points', uuid, JSON.stringify(point, null, 2), (err, data) => { // Save to redis
+      if(data) {
+        client.hget('points', uuid, (err, data) => { // Get saved point from redis
+          if(data) {
+            res.set('Content-Type', 'text/json')
+            res.status(200).end(data)
+          } else {
+            res.status(204).end('Could not get saved point - save was fine though')
+          }
+        })
+      } else {
+        res.status(500).end('Could not save point')
+      }
+    });
+  }
+})
+
+app.delete('/points/:uuid', (req, res) => {
   console.log(req)
   if(req.params.uuid) { // If request has data
     client.hdel('points', req.params.uuid, (err, data) => {
       if(data) {
         res.status(200).end("Point deleted")
       } else {
-        res.status(200).end('Point not found')
+        res.status(204).end('Point not found')
       }
     })
   } else {
