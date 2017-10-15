@@ -71,7 +71,8 @@ app.post('/points', (req, res) => { // Post a new point OR update an existing on
 app.patch('/points/:uuid', (req, res) => {
   console.log(req)
   if(req.params.uuid && req.body) {
-    const point = req.body;
+    const point = req.body
+    const uuid = req.params.uuid
     client.hset('points', uuid, JSON.stringify(point, null, 2), (err, data) => { // Save to redis
       if(data) {
         client.hget('points', uuid, (err, data) => { // Get saved point from redis
