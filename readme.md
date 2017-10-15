@@ -10,6 +10,8 @@ Features:
 
 ## Installation
 
+Requires Node.js.
+
 The application uses Redis as a database. Refer to the [Redis Quick Start](https://redis.io/topics/quickstart) on how to install Redis.
 
 After installing, run redis:
