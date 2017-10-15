@@ -74,7 +74,7 @@ app.patch('/points/:uuid', (req, res) => {
     const point = req.body
     const uuid = req.params.uuid
     client.hset('points', uuid, JSON.stringify(point, null, 2), (err, data) => { // Save to redis
-      if(data) {
+      if(data === 0) {
         client.hget('points', uuid, (err, data) => { // Get saved point from redis
           if(data) {
             res.set('Content-Type', 'text/json')
@@ -83,8 +83,6 @@ app.patch('/points/:uuid', (req, res) => {
             res.status(204).end('Could not get saved point - save was fine though')
           }
         })
-      } else {
-        res.status(500).end('Could not save point')
       }
     });
   }
